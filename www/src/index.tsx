@@ -10,12 +10,12 @@ const LoadingProgressBar = loadingProgressBarEl('loading-progress-bar', { useSha
 FC(() => {
   const myRef = useRef<{ generateProgress?: Generator }>({});
 
-  const handleProgress = () => {
+  const handleProgress = useCallback(() => {
     if (myRef.current.generateProgress !== undefined) {
       const r = myRef.current.generateProgress.next();
       console.log(JSON.stringify(r));
     }
-  };
+  }, []);
 
   return (
     <>
