@@ -1,7 +1,7 @@
 {
   "name": "loading-progress-bar",
   "version": "0.0.1-0",
-  "description": "",
+  "description": "The universal, framework-agnostic loading progress bar component",
   "main": "index.js",
   "scripts": {
     "build": "rm -rf ./lib && rollup -c && node ./scripts/.make-lib",
@@ -23,9 +23,6 @@
     "url": "https://github.com/sumbad/loading-progress-bar/issues"
   },
   "homepage": "https://github.com/sumbad/loading-progress-bar#readme",
-  "files": [
-    "lib/"
-  ],
   "devDependencies": {
     "@babel/core": "^7.11.1",
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
