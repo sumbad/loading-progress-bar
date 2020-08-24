@@ -1,11 +1,8 @@
-import { useRef, useEffect, useCallback } from 'haunted';
+import { useRef, useCallback } from 'haunted';
 import { FC } from '@web-companions/fc';
 import { loadingProgressBarEl } from '../../src';
-// import { loadingProgressBarEl } from '../../lib';
 
-// console.log(loadingProgressBarEl);
-
-const LoadingProgressBar = loadingProgressBarEl('loading-progress-bar');
+const LoadingProgressBar = loadingProgressBarEl('loading-progress-bar', { useShadowDOM: false });
 
 /**
  * ROOT element
@@ -13,12 +10,12 @@ const LoadingProgressBar = loadingProgressBarEl('loading-progress-bar');
 FC(() => {
   const myRef = useRef<{ generateProgress?: Generator }>({});
 
-  const handleProgress = useCallback(() => {
+  const handleProgress = () => {
     if (myRef.current.generateProgress !== undefined) {
       const r = myRef.current.generateProgress.next();
       console.log(JSON.stringify(r));
     }
-  }, []);
+  };
 
   return (
     <>

@@ -2,7 +2,7 @@ import style from './styles/$.scss';
 import { useState, useCallback, useEffect } from 'haunted';
 import { FC } from '@web-companions/fc';
 
-export const loadingProgressBarEl = FC(function (prop: { ref?: { current: any } } = { ref: { current: {} } }) {
+export const loadingProgressBarEl = FC(function (prop: { ref?: { current?: any } } = { ref: { current: {} } }) {
   const [animationName, setAnimationName] = useState('f0');
   const [isPause, setIsPause] = useState(false);
 
@@ -20,10 +20,8 @@ export const loadingProgressBarEl = FC(function (prop: { ref?: { current: any } 
       yield setAnimationName('f10');
     };
 
-    prop.ref = {
-      ...prop.ref,
-      current: this ?? {},
-    };
+    prop.ref = prop.ref ?? {};
+    prop.ref.current = this ?? {};
     prop.ref.current.generateProgress = generator();
   }, []);
 
@@ -35,7 +33,6 @@ export const loadingProgressBarEl = FC(function (prop: { ref?: { current: any } 
     <>
       <style>{style}</style>
       <div class={`animated yt-loader ${isPause ? 'pause' : ''}`} style={`animation-name: ${animationName}`}></div>
-      <button onclick={handlePause}>Pause</button>
     </>
   );
 }).element;
