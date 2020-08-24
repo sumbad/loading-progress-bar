@@ -1,5 +1,4 @@
 import resolve from '@rollup/plugin-node-resolve';
-import babel from '@rollup/plugin-babel';
 
 const terser = require('rollup-plugin-terser').terser;
 const minifyLiteralsHTMLPlugin = require('rollup-plugin-minify-html-literals').default;
@@ -25,6 +24,8 @@ export const prod = (input, file, plugins) => ({
     format: 'es',
   },
   plugins: [resolve(), terser(), minifyLiteralsHTMLPlugin(), ...plugins],
+  // indicate which modules should be treated as external
+  external: ['@web-companions/fc', 'haunted', 'lit-html'],
 });
 
 export default (input) => {

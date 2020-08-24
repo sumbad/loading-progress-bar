@@ -6,6 +6,8 @@
     "allowJs": false,
     "inlineSources": true,
     "rootDir": ".",
+    "strict": true,
+    "esModuleInterop": true,
     "jsx": "preserve"
   }
 }
