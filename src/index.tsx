@@ -4,7 +4,7 @@ import createEmotion, { Emotion } from 'create-emotion';
 
 import style from './styles/$.scss';
 
-interface LoadingProgressBarProps {
+export interface LoadingProgressBarProps {
   ref?: { current?: any };
   config?: {
     duration?: number; // ms (2000ms by default)
