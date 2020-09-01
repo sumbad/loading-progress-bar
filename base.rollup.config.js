@@ -1,4 +1,5 @@
 import resolve from '@rollup/plugin-node-resolve';
+import replace from '@rollup/plugin-replace';
 
 const terser = require('rollup-plugin-terser').terser;
 const minifyLiteralsHTMLPlugin = require('rollup-plugin-minify-html-literals').default;
@@ -14,7 +15,13 @@ export const dev = (input, file, plugins) => ({
     format: 'iife', // immediately-invoked function expression — suitable for <script> tags
     sourcemap: true,
   },
-  plugins: [resolve(), ...plugins],
+  plugins: [
+    replace({
+      'process.env.NODE_ENV': JSON.stringify('development'),
+    }),
+    resolve(),
+    ...plugins,
+  ],
 });
 
 export const prod = (input, file, plugins) => ({
@@ -23,7 +30,15 @@ export const prod = (input, file, plugins) => ({
     file,
     format: 'es',
   },
-  plugins: [resolve(), terser(), minifyLiteralsHTMLPlugin(), ...plugins],
+  plugins: [
+    replace({
+      'process.env.NODE_ENV': JSON.stringify('production'),
+    }),
+    resolve(),
+    terser(),
+    minifyLiteralsHTMLPlugin(),
+    ...plugins,
+  ],
   // indicate which modules should be treated as external
   external: ['@web-companions/fc', 'haunted', 'lit-html'],
 });
