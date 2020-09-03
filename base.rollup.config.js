@@ -40,7 +40,8 @@ export const prod = (input, file, plugins) => ({
     ...plugins,
   ],
   // indicate which modules should be treated as external
-  external: ['@web-companions/fc', 'haunted', 'lit-html'],
+  // external: ['@web-companions/fc', 'haunted', 'lit-html', 'create-emotion'],
+  external: ['haunted', 'lit-html', 'create-emotion'],
 });
 
 export default (input) => {

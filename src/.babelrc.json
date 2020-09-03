@@ -1,6 +1,7 @@
 {
   "extends": "../.babelrc.json",
   "plugins": [
+    "emotion",
     [
       "babel-plugin-transform-jsx-to-tt",
       {
