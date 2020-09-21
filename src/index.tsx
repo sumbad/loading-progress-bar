@@ -66,6 +66,8 @@ export const loadingProgressBar = EFC<LoadingProgressBarProps>(
           }
         }
       };
+
+      this.ref = this.ref || {};
       this.ref.current = this;
       this.generateProgress = generator();
       this.togglePause = (pause: boolean) => setIsPause((hasPause) => (typeof pause === 'boolean' ? pause : !hasPause));

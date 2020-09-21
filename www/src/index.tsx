@@ -14,12 +14,14 @@ EFC(
       generateProgress?: Generator;
       togglePause?: (isPause?: boolean) => void;
     }>({});
+
     const [loaderConfig, setLoaderConfig] = useState({
       duration: 2000,
       stepsCount: 1,
     });
 
     const handleProgress = useCallback(() => {
+      console.log(myRef.current);
       if (myRef.current.generateProgress !== undefined) {
         const r = myRef.current.generateProgress.next();
         if (r.value === 1) {
