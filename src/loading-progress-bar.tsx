@@ -1,3 +1,3 @@
-import { loadingProgressBarEl } from '.';
+import { loadingProgressBar } from '.';
 
-export default loadingProgressBarEl('loading-progress-bar', { useShadowDOM: false });
+export default loadingProgressBar.define('loading-progress-bar');

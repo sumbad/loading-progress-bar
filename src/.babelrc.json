@@ -1,21 +1,8 @@
 {
   "extends": "../.babelrc.json",
   "plugins": [
-    "emotion",
     [
-      "babel-plugin-transform-jsx-to-tt",
-      {
-        "tag": "html",
-        "import": {
-          "module": "lit-html",
-          "export": "html"
-        },
-        "attributes": [
-          {
-            "preset": "lit-html"
-          }
-        ]
-      }
+      "babel-plugin-transform-jsx-to-tt"
     ]
   ]
 }
