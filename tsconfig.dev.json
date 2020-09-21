@@ -1,6 +1,10 @@
 {
   "extends": "@insum/ts.config/tsconfig.base.json",
   "compilerOptions": {
+    // Strict Checks
+    // "strictNullChecks": true,
+    "strictFunctionTypes": true,
+
     "module": "esnext",
     "target": "esnext",
     "allowJs": false,
