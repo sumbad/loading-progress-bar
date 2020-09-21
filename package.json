@@ -19,8 +19,8 @@
     "dev": "concurrently \"npm:start\" \"npm:watch\"",
     "start": "browser-sync 'www' -w --port 8082 --no-open",
     "prepublishOnly": "npm run build",
-    "pub": "npm publish ./lib",
-    "pub:beta": "npm publish ./lib --tag beta"
+    "release": "npm publish ./lib",
+    "release:beta": "npm publish ./lib --tag beta"
   },
   "keywords": [],
   "dependencies": {
