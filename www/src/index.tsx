@@ -1,5 +1,4 @@
-import { useRef, useCallback, useState } from 'augmentor';
-import { EFC } from '@web-companions/fc';
+import { EG, useRef, useCallback, useState } from '@web-companions/fc';
 import { loadingProgressBar } from '../../src';
 import { render } from 'uhtml';
 
@@ -8,7 +7,7 @@ const LoadingProgressBar = loadingProgressBar.define('loading-progress-bar');
 /**
  * ROOT element
  */
-EFC(
+EG(
   () => {
     const myRef = useRef<{
       generateProgress?: Generator;

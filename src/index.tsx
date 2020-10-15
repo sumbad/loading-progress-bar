@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'augmentor';
-import { EFC } from '@web-companions/fc';
+import { EG, useState, useEffect } from '@web-companions/fc';
 
 const html = String.raw;
 const css = String.raw;
@@ -12,7 +11,7 @@ export interface LoadingProgressBarProps {
   ref?: any;
 }
 
-export const loadingProgressBar = EFC<LoadingProgressBarProps>(
+export const loadingProgressBar = EG<LoadingProgressBarProps>(
   {
     config: {
       init: {
@@ -34,8 +33,10 @@ export const loadingProgressBar = EFC<LoadingProgressBarProps>(
 
       let _keyframes = '';
       for (let i = 0; i < props.config.stepsCount; i++) {
-        const keyframeName = ` loadingPB_${i * k}`
-        _keyframes = _keyframes + ' ' +
+        const keyframeName = ` loadingPB_${i * k}`;
+        _keyframes =
+          _keyframes +
+          ' ' +
           css`
             /* clean-css ignore:start */
             @keyframes ${keyframeName} {
@@ -47,8 +48,7 @@ export const loadingProgressBar = EFC<LoadingProgressBarProps>(
               }
             }
             /* clean-css ignore:end */
-          `
-        ;
+          `;
       }
       setKeyframes(_keyframes);
 
