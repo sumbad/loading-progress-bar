@@ -57,6 +57,8 @@ Or use one of the following content delivery networks:
 
 ### Without bundling
 
+[Demo](https://codepen.io/sumbad/pen/XWdyKNd?editors=1000)
+
 **index.html**
 
 ```html
@@ -66,15 +68,14 @@ Or use one of the following content delivery networks:
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <script src="https://unpkg.com/loading-progress-bar">
-      loadingProgressBar.define('loading-progress-bar');
-    </script>
+    <script src="https://unpkg.com/loading-progress-bar"></script>
   </head>
 
   <body>
     <loading-progress-bar id="loadingProgressBar"></loading-progress-bar>
 
     <script>
+      LoadingProgressBar.loadingProgressBar.define('loading-progress-bar');
       const loadingProgressBarEl = document.querySelector('#loadingProgressBar');
       setInterval(() => {
         loadingProgressBarEl.generateProgress.next();
@@ -86,16 +87,21 @@ Or use one of the following content delivery networks:
 
 ### With ReactJS
 
+[Demo](https://components.studio/edit/m0AybCwfGojtKvtn4SFx)
+
 **index.js**
 
 ```js
-import React, { useState } from 'react';
-import { loadingProgressBarEl } from 'loading-progress-bar';
-import { createReactElement } from '@web-companions/fc/adapters/react';
+import React, { useRef, useEffect } from "react";
+import { loadingProgressBar } from "loading-progress-bar";
+import { elementToReact } from "@web-companions/react-adapter";
 
-const LoadingProgressBarReact = loadingProgressBarEl('loading-progress-bar').adapter(createReactElement);
+const LoadingProgressBarReact = loadingProgressBar.adapter(
+  elementToReact,
+  "loading-progress-bar"
+);
 
-function Example() {
+export default function Example() {
   const myRef = useRef(null);
 
   useEffect(() => {
@@ -110,10 +116,9 @@ function Example() {
     </div>
   );
 }
-
 ```
 
-### With bundling (e.g. Webpack)
+### With bundling (e.g. Webpack, Rollup, Snowpack and etc.)
 
 **index.js**
 
@@ -127,16 +132,14 @@ const loadingProgressBarEl = document.createElement('loading-progress-bar');
 document.body.append(loadingProgressBarEl);
 ```
 
-
 ---
 
 ## API
 
-- **generateProgress**: Generator; 
+- **generateProgress**: Generator;
   - To generate the next progress step.
 - **togglePause**: (isPause?: boolean) => void
   - To pause and continue the process.
-
 
 ---
 

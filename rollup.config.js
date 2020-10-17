@@ -78,7 +78,7 @@ export const prodIife = (input, file, plugins) => ({
   output: {
     file,
     format: 'iife',
-    name: 'loadingProgressBar',
+    name: 'LoadingProgressBar',
   },
   plugins: [
     ...plugins,

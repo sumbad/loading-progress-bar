@@ -25,7 +25,7 @@
   },
   "keywords": [],
   "dependencies": {
-    "@web-companions/fc": "0.1.0-test-tng.2"
+    "@web-companions/fc": "0.1.0-test-tng.3"
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
