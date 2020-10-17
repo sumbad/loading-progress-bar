@@ -1,6 +1,6 @@
 {
   "name": "loading-progress-bar",
-  "version": "0.0.1-9",
+  "version": "0.0.1-10",
   "description": "The universal, framework-agnostic loading progress bar component",
   "author": "Denis Sumbaev @sumbad",
   "license": "MIT",
