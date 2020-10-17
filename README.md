@@ -19,7 +19,9 @@
 
 <div align="center">
   <a href="https://github.com/sumbad/loading-progress-bar">
-    <img src="./title.png" alt="Screenshot of the color picker">
+    <object data="https://raw.githubusercontent.com/sumbad/loading-progress-bar/master/title.png" type="image/png">
+      <img src="./title.png" alt="Screenshot of the component">
+    </object>
   </a>
   <blockquote align="center">The universal, framework-agnostic loading progress bar component</blockquote>
 </div>
@@ -89,17 +91,14 @@ Or use one of the following content delivery networks:
 
 [Demo](https://components.studio/edit/m0AybCwfGojtKvtn4SFx)
 
-**index.js**
+**index.jsx**
 
-```js
-import React, { useRef, useEffect } from "react";
-import { loadingProgressBar } from "loading-progress-bar";
-import { elementToReact } from "@web-companions/react-adapter";
+```jsx
+import React, { useRef, useEffect } from 'react';
+import { loadingProgressBar } from 'loading-progress-bar';
+import { elementToReact } from '@web-companions/react-adapter';
 
-const LoadingProgressBarReact = loadingProgressBar.adapter(
-  elementToReact,
-  "loading-progress-bar"
-);
+const LoadingProgressBarReact = loadingProgressBar.adapter(elementToReact, 'loading-progress-bar');
 
 export default function Example() {
   const myRef = useRef(null);
