@@ -15,8 +15,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- ### Security -->
 
 <!-- ## Unreleased -->
-Create the loading progress bar component.
 
+## [[0.1.0](https://github.com/sumbad/loading-progress-bar/releases/tag/v0.1.0)] - 2020-10-18
+
+### Initial release
 
 ## [0.0.0] - 2020-08-20
 
