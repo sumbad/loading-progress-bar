@@ -70,6 +70,7 @@ export const prod = (input, file, plugins) => ({
     terser(),
     analyze(),
   ],
+  external: ['@web-companions/fc']
 });
 
 export const prodIife = (input, file, plugins) => ({
@@ -77,6 +78,7 @@ export const prodIife = (input, file, plugins) => ({
   output: {
     file,
     format: 'iife',
+    name: 'loadingProgressBar',
   },
   plugins: [
     ...plugins,
@@ -99,7 +101,7 @@ export const prodIife = (input, file, plugins) => ({
 
 export default production
   ? [
-      prod('./src/index.tsx', './lib/index.js', plugins),
-      prodIife('./src/loading-progress-bar.tsx', './lib/loading-progress-bar.js', plugins),
+      prod('./src/index.tsx', './lib/index.es.js', plugins),
+      prodIife('./src/index.tsx', './lib/index.js', plugins),
     ]
   : dev('./www/src/index.tsx', './www/index.js', plugins);

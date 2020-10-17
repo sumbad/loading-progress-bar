@@ -78,7 +78,7 @@ export const loadingProgressBar = EG<LoadingProgressBarProps>(
         /* dynamic keyframes */
         ${keyframes}
 
-        .yt-loader {
+        .lpb {
           animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45);
           animation-fill-mode: both;
           background: #ef534e;
@@ -93,7 +93,7 @@ export const loadingProgressBar = EG<LoadingProgressBarProps>(
           animation-play-state: ${isPause ? 'paused' : 'running'};
         }
 
-        .yt-loader:after {
+        .lpb:after {
           display: block;
           position: absolute;
           content: '';
@@ -104,7 +104,7 @@ export const loadingProgressBar = EG<LoadingProgressBarProps>(
           opacity: 0.5;
         }
       `,
-      template: <div class="yt-loader"></div>,
+      template: <div class="lpb"></div>,
     };
   },
   {
