@@ -1,5 +1,3 @@
-# loading-progress-bar
-
 <div align="center">
   <a href="https://www.npmjs.com/package/loading-progress-bar">
     <img src="https://img.shields.io/npm/v/loading-progress-bar.svg?maxAge=86400" alt="Last npm Registry Version">
