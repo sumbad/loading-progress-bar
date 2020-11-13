@@ -12,6 +12,7 @@
     "jsx": "preserve"
   },
   "exclude": [
-    "www"
+    "www",
+    "__tests__"
   ]
 }

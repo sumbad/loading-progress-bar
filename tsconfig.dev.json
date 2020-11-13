@@ -8,10 +8,14 @@
     "module": "esnext",
     "target": "esnext",
     "allowJs": false,
+    "declaration": false,
     "inlineSources": true,
     "rootDir": ".",
     "strict": true,
     "esModuleInterop": true,
     "jsx": "preserve"
-  }
+  },
+  "exclude": [
+    "__tests__"
+  ]
 }

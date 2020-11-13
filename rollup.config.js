@@ -16,44 +16,60 @@ const atImport = require('postcss-import');
 // `npm run dev` -> `production` is false
 const production = !process.env.ROLLUP_WATCH;
 
-const plugins = [
-  replace({
+const plug = {
+  replace: replace({
     'process.env.NODE_ENV': production ? JSON.stringify('production') : JSON.stringify('development'),
   }),
-  resolve(),
-  typescriptPlugin({
+  resolve: resolve(),
+  ts: typescriptPlugin({
     tsconfig: `./tsconfig.${production ? 'prod' : 'dev'}.json`,
   }),
-  babel({
+  babel: babel({
     babelHelpers: 'bundled',
     extensions: [...DEFAULT_EXTENSIONS, '.ts', '.tsx'],
     exclude: 'node_modules/**',
   }),
-  postcss({
+  postcss: postcss({
     inject: false,
     extensions: ['.css', '.pcss', '.scss'],
     plugins: [atImport()],
   }),
-];
+};
 
-export const dev = (input, file, plugins) => ({
+export const dev = (input, file) => ({
   input,
   output: {
     file,
     format: 'iife', // immediately-invoked function expression — suitable for <script> tags
     sourcemap: true,
   },
-  plugins,
+  plugins: [plug.replace, plug.resolve, plug.ts, plug.babel, plug.postcss],
+});
+export const test = (input, dir) => ({
+  input,
+  output: {
+    dir,
+    format: 'es',
+    sourcemap: true,
+  },
+  manualChunks: {
+    vendors: ['@web-companions/fc'],
+  },
+  plugins: [plug.replace, plug.resolve, typescriptPlugin({ tsconfig: `./tsconfig.dev.json` }), plug.babel, plug.postcss],
 });
 
-export const prod = (input, file, plugins) => ({
+export const prod = (input, file) => ({
   input,
   output: {
     file,
     format: 'es',
   },
   plugins: [
-    ...plugins,
+    plug.replace,
+    plug.resolve,
+    plug.ts,
+    plug.babel,
+    plug.postcss,
     minifyHTML(),
     minifyTaggedCSSTemplate({
       parserOptions: {
@@ -70,10 +86,10 @@ export const prod = (input, file, plugins) => ({
     terser(),
     analyze(),
   ],
-  external: ['@web-companions/fc']
+  external: ['@web-companions/fc'],
 });
 
-export const prodIife = (input, file, plugins) => ({
+export const prodIife = (input, file) => ({
   input,
   output: {
     file,
@@ -81,7 +97,11 @@ export const prodIife = (input, file, plugins) => ({
     name: 'LoadingProgressBar',
   },
   plugins: [
-    ...plugins,
+    plug.replace,
+    plug.resolve,
+    plug.ts,
+    plug.babel,
+    plug.postcss,
     minifyHTML(),
     minifyTaggedCSSTemplate({
       parserOptions: {
@@ -100,8 +120,5 @@ export const prodIife = (input, file, plugins) => ({
 });
 
 export default production
-  ? [
-      prod('./src/index.tsx', './lib/index.es.js', plugins),
-      prodIife('./src/index.tsx', './lib/index.js', plugins),
-    ]
-  : dev('./www/src/index.tsx', './www/index.js', plugins);
+  ? [prod('./src/index.tsx', './lib/index.es.js'), prodIife('./src/index.tsx', './lib/index.js'), test('./www/src/test.tsx', './www')]
+  : [dev('./www/src/index.tsx', './www/index.js'), test('./www/src/test.tsx', './www')];
