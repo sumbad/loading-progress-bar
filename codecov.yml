@@ -1,0 +1,6 @@
+fixes:
+  - ".temp/*::./.temp/"
+
+parsers:
+  javascript:
+    enable_partials: yes
