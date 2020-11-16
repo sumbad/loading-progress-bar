@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- ### Security -->
 
 <!-- ## Unreleased -->
+### Added
+  - Add testing.
 
 ## [[1.0.0](https://github.com/sumbad/loading-progress-bar/releases/tag/v1.0.0)] - 2020-10-18
 
