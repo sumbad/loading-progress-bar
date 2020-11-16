@@ -27,7 +27,7 @@
     "release:beta": "npm publish ./lib --tag beta",
     "test": "npm run build && jest",
     "test:watch": "concurrently \"npm run test -- --watch\" \"npm:watch\"",
-    "test:report": "nyc report --reporter=html --reporter=lcov --reporter=text",
+    "test:report": "nyc report --reporter=html --reporter=lcov --reporter=text-summary",
     "test:coverage": "npm run test && npm run test:report"
   },
   "keywords": [

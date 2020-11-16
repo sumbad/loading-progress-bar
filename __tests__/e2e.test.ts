@@ -23,7 +23,7 @@ describe('localhost', () => {
       for (const range of entry.ranges) usedBytes += range.end - range.start - 1;
     }
     console.log(`Bytes used: ${(usedBytes / totalBytes) * 100}%`);
-    pti.write([...jsCoverage, ...cssCoverage], { includeHostname: false, storagePath: './.nyc_output' });
+    pti.write([...jsCoverage, ...cssCoverage], { includeHostname: false, storagePath: './.temp/.nyc_output' });
   });
 
   it('should be titled "Test"', async () => {
