@@ -23,6 +23,7 @@ describe('localhost', () => {
       for (const range of entry.ranges) usedBytes += range.end - range.start - 1;
     }
     console.log(`Bytes used: ${(usedBytes / totalBytes) * 100}%`);
+    // NOTE: https://github.com/istanbuljs/puppeteer-to-istanbul/issues/18
     pti.write([...jsCoverage, ...cssCoverage], { includeHostname: false, storagePath: './.temp/.nyc_output' });
   });
 

@@ -23,7 +23,9 @@ coverage
 *.lcov
 
 # nyc test coverage
-.nyc_output
+# NOTE: https://github.com/istanbuljs/puppeteer-to-istanbul/issues/18
+# .nyc_output
+# .temp
 
 # Grunt intermediate storage (https://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
@@ -108,4 +110,3 @@ lib
 www/**/*.js
 www/**/*.js.map
 .DS_Store
-.temp
