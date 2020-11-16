@@ -6,6 +6,9 @@
   "license": "MIT",
   "main": "index.js",
   "module": "index.es.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sumbad/loading-progress-bar.git"
@@ -24,9 +27,14 @@
     "release:beta": "npm publish ./lib --tag beta",
     "test": "npm run build && jest",
     "test:watch": "concurrently \"npm run test -- --watch\" \"npm:watch\"",
-    "test:report": "nyc report --reporter=html --reporter=lcov --reporter=text"
+    "test:report": "nyc report --reporter=html --reporter=lcov --reporter=text",
+    "test:coverage": "npm run test && npm run test:report"
   },
-  "keywords": [],
+  "keywords": [
+    "web component",
+    "progress",
+    "bar"
+  ],
   "dependencies": {
     "@web-companions/fc": "0.1.0-test-tng.3"
   },

@@ -2,14 +2,14 @@
   <a href="https://www.npmjs.com/package/loading-progress-bar">
     <img src="https://img.shields.io/npm/v/loading-progress-bar.svg?maxAge=86400" alt="Last npm Registry Version">
   </a>
-  <!-- <a href="https://travis-ci.org/sumbad/loading-progress-bar?branch=master">
-    <img src="https://travis-ci.org/sumbad/loading-progress-bar.svg?branch=master" alt="Build Status">
-  </a> -->
-  <!-- <a href="https://codecov.io/gh/sumbad/loading-progress-bar">
-    <img src="https://codecov.io/gh/sumbad/loading-progress-bar/branch/master/graph/badge.svg" />
-  </a> -->
   <a href="https://bundlephobia.com/result?p=loading-progress-bar">
     <img alt="gzip size" src="https://badgen.net/bundlephobia/minzip/loading-progress-bar" />
+  </a>
+  <a href="https://travis-ci.org/sumbad/loading-progress-bar?branch=master">
+    <img src="https://travis-ci.org/sumbad/loading-progress-bar.svg?branch=master" alt="Build Status">
+  </a>
+  <a href="https://codecov.io/gh/sumbad/loading-progress-bar">
+    <img src="https://codecov.io/gh/sumbad/loading-progress-bar/branch/master/graph/badge.svg" />
   </a>
 </div>
 
