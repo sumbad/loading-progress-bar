@@ -108,4 +108,4 @@ lib
 www/**/*.js
 www/**/*.js.map
 .DS_Store
-.nyc_output.js
+.temp
