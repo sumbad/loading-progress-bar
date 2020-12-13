@@ -5,8 +5,8 @@
   <a href="https://bundlephobia.com/result?p=loading-progress-bar">
     <img alt="gzip size" src="https://badgen.net/bundlephobia/minzip/loading-progress-bar" />
   </a>
-  <a href="https://travis-ci.org/sumbad/loading-progress-bar?branch=master">
-    <img src="https://travis-ci.org/sumbad/loading-progress-bar.svg?branch=master" alt="Build Status">
+  <a href="https://travis-ci.com//sumbad/loading-progress-bar?branch=master">
+    <img src="https://travis-ci.com//sumbad/loading-progress-bar.svg?branch=master" alt="Build Status">
   </a>
   <a href="https://codecov.io/gh/sumbad/loading-progress-bar">
     <img src="https://codecov.io/gh/sumbad/loading-progress-bar/branch/master/graph/badge.svg" />
@@ -87,7 +87,7 @@ Or use one of the following content delivery networks:
 
 ### With ReactJS
 
-[Demo](https://components.studio/edit/m0AybCwfGojtKvtn4SFx)
+[Demo](https://codesandbox.io/s/wizardly-dawn-064gl?file=/src/App.tsx)
 
 **index.jsx**
 
