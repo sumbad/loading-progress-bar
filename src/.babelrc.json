@@ -4,5 +4,6 @@
     [
       "babel-plugin-transform-jsx-to-tt"
     ]
-  ]
+  ],
+  "inputSourceMap": true
 }

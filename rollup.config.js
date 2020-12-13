@@ -45,24 +45,13 @@ export const dev = (input, file) => ({
   },
   plugins: [plug.replace, plug.resolve, plug.ts, plug.babel, plug.postcss],
 });
-export const test = (input, dir) => ({
-  input,
-  output: {
-    dir,
-    format: 'es',
-    sourcemap: true,
-  },
-  manualChunks: {
-    vendors: ['@web-companions/fc'],
-  },
-  plugins: [plug.replace, plug.resolve, typescriptPlugin({ tsconfig: `./tsconfig.dev.json` }), plug.babel, plug.postcss],
-});
 
 export const prod = (input, file) => ({
   input,
   output: {
     file,
     format: 'es',
+    sourcemap: true,
   },
   plugins: [
     plug.replace,
@@ -95,6 +84,7 @@ export const prodIife = (input, file) => ({
     file,
     format: 'iife',
     name: 'LoadingProgressBar',
+    sourcemap: true,
   },
   plugins: [
     plug.replace,
@@ -120,5 +110,5 @@ export const prodIife = (input, file) => ({
 });
 
 export default production
-  ? [prod('./src/index.tsx', './lib/index.es.js'), prodIife('./src/index.tsx', './lib/index.js'), test('./www/src/test.tsx', './www')]
-  : [dev('./www/src/index.tsx', './www/index.js'), test('./www/src/test.tsx', './www')];
+  ? [prod('./src/index.tsx', './lib/index.es.js'), prodIife('./src/index.tsx', './lib/index.js')]
+  : [dev('./www/src/index.tsx', './www/index.js')];

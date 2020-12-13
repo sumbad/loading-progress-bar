@@ -11,6 +11,13 @@ export interface LoadingProgressBarProps {
   ref?: any;
 }
 
+export interface LoadingProgressBarHTMLElement extends HTMLElement {
+  generateProgress?: Generator;
+  togglePause?: (isPause?: boolean) => void;
+  ref?: { current?: any };
+  config?: LoadingProgressBarProps['config'];
+}
+
 export const loadingProgressBar = EG<LoadingProgressBarProps>(
   {
     config: {
@@ -20,19 +27,18 @@ export const loadingProgressBar = EG<LoadingProgressBarProps>(
       },
     },
   },
-  function (
-    this: HTMLElement & { generateProgress?: Generator; togglePause?: (isPause?: boolean) => void; ref?: { current?: any } },
-    props
-  ) {
+  function (this: LoadingProgressBarHTMLElement, props) {
     const [isPause, setIsPause] = useState(false);
     const [keyframes, setKeyframes] = useState();
     const [animationName, setAnimationName] = useState();
+    const animationDuration = props.config?.duration ?? 0;
 
     useEffect(() => {
-      const k = 100 / props.config.stepsCount;
+      const stepsCount = props.config?.stepsCount ?? 1;
+      const k = 100 / stepsCount;
 
       let _keyframes = '';
-      for (let i = 0; i < props.config.stepsCount; i++) {
+      for (let i = 0; i < stepsCount; i++) {
         const keyframeName = ` loadingPB_${i * k}`;
         _keyframes =
           _keyframes +
@@ -55,7 +61,7 @@ export const loadingProgressBar = EG<LoadingProgressBarProps>(
       let index = 0;
       const generator = function* () {
         while (true) {
-          if (index < props.config.stepsCount) {
+          if (index < stepsCount) {
             setAnimationName(`loadingPB_${index * k}`);
             yield ++index;
           } else {
@@ -70,7 +76,7 @@ export const loadingProgressBar = EG<LoadingProgressBarProps>(
       this.ref = this.ref || {};
       this.ref.current = this;
       this.generateProgress = generator();
-      this.togglePause = (pause: boolean) => setIsPause((hasPause) => (typeof pause === 'boolean' ? pause : !hasPause));
+      this.togglePause = (pause?: boolean) => setIsPause((hasPause) => (typeof pause === 'boolean' ? pause : !hasPause));
     }, [props.config]);
 
     return {
@@ -89,7 +95,7 @@ export const loadingProgressBar = EG<LoadingProgressBarProps>(
           z-index: 9999;
           position: fixed;
           animation-name: ${animationName};
-          animation-duration: ${props.config.duration + 'ms'};
+          animation-duration: ${animationDuration + 'ms'};
           animation-play-state: ${isPause ? 'paused' : 'running'};
         }
 

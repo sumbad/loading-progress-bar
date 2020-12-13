@@ -1,9 +1,29 @@
-const {defaults} = require('jest-config');
+const { defaults } = require('jest-config');
 
 module.exports = {
-  preset: 'jest-puppeteer',
-  moduleFileExtensions: [...defaults.moduleFileExtensions, 'ts', 'tsx'],
+  moduleFileExtensions: [...defaults.moduleFileExtensions, 'js', 'ts', 'tsx'],
+  runner: 'jest-electron/runner',
+  testEnvironment: 'jest-electron/environment',
   testRegex: '(/__tests__/.*(test|spec))\\.[jt]sx?$',
-  // collectCoverageFrom: ['./src/**/*.{js,jsx,ts,tsx}', '!**/node_modules/**'],
-  transform: { '\\.[jt]sx?$': ['babel-jest', {configFile: "./__tests__/.babelrc.json"}] },
+  transform: { '\\.[jt]sx?$': ['babel-jest', { configFile: './__tests__/.babelrc.json' }] },
+  transformIgnorePatterns: ['../../node_modules/(?!${@web-companions/fc})'],
+  collectCoverageFrom: ['./src/**/*.{js,jsx,ts,tsx}', '!<rootDir>/node_modules/'],
+  coverageDirectory: 'coverage',
+  // coverageThreshold: {
+  //   global: {
+  //     lines: 90,
+  //     statements: 90,
+  //   },
+  // },
+  verbose: false,
+  collectCoverage: true,
+  // moduleFileExtensions: [
+  //   'ts',
+  //   'tsx',
+  //   'js',
+  //   'jsx',
+  //   'json',
+  //   'node'
+  // ]
+  // coverageReporters: ['json'],
 };
