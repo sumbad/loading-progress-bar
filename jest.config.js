@@ -1,3 +1,4 @@
+const path = require('path');
 const { defaults } = require('jest-config');
 
 module.exports = {
@@ -5,7 +6,7 @@ module.exports = {
   runner: 'jest-electron/runner',
   testEnvironment: 'jest-electron/environment',
   testRegex: '(/__tests__/.*(test|spec))\\.[jt]sx?$',
-  transform: { '\\.[jt]sx?$': ['babel-jest', { configFile: './__tests__/.babelrc.json' }] },
+  transform: { '\\.[jt]sx?$': ['babel-jest', { configFile: path.join(__dirname, '__tests__/.babelrc.json') }] },
   transformIgnorePatterns: ['../../node_modules/(?!${@web-companions/fc})'],
   collectCoverageFrom: ['./src/**/*.{js,jsx,ts,tsx}', '!<rootDir>/node_modules/'],
   coverageDirectory: 'coverage',

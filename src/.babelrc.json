@@ -1,5 +1,4 @@
 {
-  "extends": "../.babelrc.json",
   "plugins": [
     [
       "babel-plugin-transform-jsx-to-tt"
