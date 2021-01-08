@@ -2,6 +2,9 @@
   "plugins": [
     [
       "babel-plugin-transform-jsx-to-tt"
+    ],
+    [
+      "@babel/plugin-proposal-optional-chaining"
     ]
   ],
   "inputSourceMap": true
