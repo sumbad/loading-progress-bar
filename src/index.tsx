@@ -5,8 +5,8 @@ const html = String.raw;
 const css = String.raw;
 
 export interface LoadingProgressBarConfig {
-  duration?: number; // ms (2000ms by default)
-  stepsCount?: number; // (1 by default)
+  duration: number; // ms (2000ms by default)
+  stepsCount: number; // (1 by default)
 }
 
 export interface LoadingProgressBarHTMLElement extends HTMLElement {
@@ -43,10 +43,10 @@ export const loadingProgressBar = EG({
   const [isPause, setIsPause] = useState(false);
   const [keyframes, setKeyframes] = useState();
   const [animationName, setAnimationName] = useState();
-  const animationDuration = props.config?.duration ?? 0;
+  const animationDuration = props.config.duration;
 
   useEffect(() => {
-    const stepsCount = props.config?.stepsCount ?? 1;
+    const stepsCount = props.config.stepsCount;
     const k = 100 / stepsCount;
 
     let _keyframes = '';

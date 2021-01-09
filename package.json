@@ -36,7 +36,7 @@
     "bar"
   ],
   "dependencies": {
-    "@web-companions/fc": "0.1.0-test-tng.4"
+    "@web-companions/fc": "0.1.0-test-tng.5"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
