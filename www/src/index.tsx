@@ -1,17 +1,17 @@
 import { EG, useRef, useCallback, useState } from '@web-companions/fc';
 import { loadingProgressBar } from '../../src';
-import { render } from 'uhtml';
+import { render as uhtmlRender } from 'uhtml';
 
 const LoadingProgressBar = loadingProgressBar.define('loading-progress-bar');
 
 /**
  * ROOT element
  */
-EG({ render })(() => {
+EG({ render: (t, c) => uhtmlRender(c, t) })(() => {
   const myRef = useRef<{
     generateProgress?: Generator;
-    togglePause?: (isPause?: boolean) => void;
-  }>({});
+    togglePause: (isPause?: boolean) => void;
+  }|null>(null);
 
   const [loaderConfig, setLoaderConfig] = useState({
     duration: 2000,
@@ -20,20 +20,20 @@ EG({ render })(() => {
 
   const handleProgress = useCallback(() => {
     console.log(myRef.current);
-    if (myRef.current.generateProgress !== undefined) {
+    if (myRef.current?.generateProgress !== undefined) {
       const r = myRef.current.generateProgress.next();
       if (r.value === 1) {
         setTimeout(() => {
-          myRef.current.togglePause(true);
+          myRef.current?.togglePause(true);
         }, 300);
         setTimeout(() => {
-          myRef.current.togglePause(false);
+          myRef.current?.togglePause(false);
         }, 1000);
         setTimeout(() => {
-          myRef.current.togglePause(true);
+          myRef.current?.togglePause(true);
         }, 2000);
         setTimeout(() => {
-          myRef.current.togglePause(false);
+          myRef.current?.togglePause(false);
         }, 3000);
       }
       console.log(JSON.stringify(r));

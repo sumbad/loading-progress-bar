@@ -26,7 +26,7 @@ export const loadingProgressBar = EG({
       },
     },
   },
-  render: (c, t: { template: string; style: string }) => {
+  render: (t: { template: string; style: string }, c) => {
     const inner = (c as ShadowRoot).innerHTML;
     if (inner !== t.template) {
       (c as ShadowRoot).innerHTML = t.template;
