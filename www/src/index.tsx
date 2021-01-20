@@ -2,7 +2,7 @@ import { EG, useRef, useCallback, useState } from '@web-companions/fc';
 import { loadingProgressBar } from '../../src';
 import { render as uhtmlRender } from 'uhtml';
 
-const LoadingProgressBar = loadingProgressBar.define('loading-progress-bar');
+const LoadingProgressBar = loadingProgressBar('loading-progress-bar');
 
 /**
  * ROOT element
@@ -57,4 +57,4 @@ EG({ render: (t, c) => uhtmlRender(c, t) })(() => {
       ></textarea>
     </>
   );
-}).define('demo-app');
+})('demo-app');
