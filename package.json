@@ -24,7 +24,7 @@
     "start": "browser-sync 'www' -w --port 8082 --no-open",
     "prepublishOnly": "npm run build",
     "release": "npm publish ./lib",
-    "release:beta": "npm publish ./lib --tag beta",
+    "release:next": "npm publish ./lib --tag next",
     "test": "jest",
     "test:watch": "npm run test -- --watch",
     "test:coverage": "npm run test -- --coverage",
