@@ -112,14 +112,15 @@ export const loadingProgressBar = EG({
       }
 
       .lpb:after {
-        display: block;
+        display: ${animationName !== undefined ? 'block' : 'none'};
         position: absolute;
         content: '';
         right: 0px;
         width: 100px;
         height: 100%;
-        /* box-shadow: #ef534e 1px 0 6px 1px; */
-        opacity: 0.5;
+        box-shadow: 0 0 10px #ef534e, 0 0 5px #ef534e;
+        opacity: 1;
+        transform: rotate(3deg) translate(0px, -4px);
       }
     `,
     template: <div class="lpb"></div>,
