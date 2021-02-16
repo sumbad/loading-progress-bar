@@ -164,8 +164,7 @@ document.body.append(loadingProgressBarEl);
         String
       </td>
       <td>
-        <span style="color:#ef534e">▧</span>
-        <code>#ef534e</code>
+        `#ef534e`
       </td>
       <td>
         Sets the main color for Loading Progress Bar.
