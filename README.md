@@ -139,7 +139,7 @@ document.body.append(loadingProgressBarEl);
   - To pause and continue the process.
 
 ---
-
+`#hexhex`
 ## Options
 
 <table>
@@ -164,7 +164,8 @@ document.body.append(loadingProgressBarEl);
         String
       </td>
       <td>
-        `#ef534e`
+        <image src="https://via.placeholder.com/15/ef534e/000000?text=+"/>
+        <code>#ef534e</code>
       </td>
       <td>
         Sets the main color for Loading Progress Bar.
