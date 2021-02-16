@@ -139,7 +139,7 @@ document.body.append(loadingProgressBarEl);
   - To pause and continue the process.
 
 ---
-`#hexhex`
+
 ## Options
 
 <table>
