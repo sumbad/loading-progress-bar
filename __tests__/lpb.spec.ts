@@ -5,7 +5,7 @@ describe('loading-progress-bar', () => {
   const ELEMENT_ID = 'loadingProgressBar';
   let lpbElement: HTMLElement;
 
-  loadingProgressBar.define('loading-progress-bar');
+  loadingProgressBar('loading-progress-bar');
 
   function getElement() {
     return document.body.getElementsByTagName(TAG)[0] as LoadingProgressBarHTMLElement;
