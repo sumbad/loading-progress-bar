@@ -75,7 +75,7 @@ Or use one of the following content delivery networks:
     <loading-progress-bar id="loadingProgressBar"></loading-progress-bar>
 
     <script>
-      LoadingProgressBar.loadingProgressBar.define('loading-progress-bar');
+      LoadingProgressBar.loadingProgressBar('loading-progress-bar');
       const loadingProgressBarEl = document.querySelector('#loadingProgressBar');
       setInterval(() => {
         loadingProgressBarEl.generateProgress.next();
@@ -96,7 +96,7 @@ import React, { useRef, useEffect } from 'react';
 import { loadingProgressBar } from 'loading-progress-bar';
 import { elementToReact } from '@web-companions/react-adapter';
 
-const LoadingProgressBarReact = loadingProgressBar.adapter(elementToReact, 'loading-progress-bar');
+const LoadingProgressBarReact = loadingProgressBar('loading-progress-bar').adapter(elementToReact);
 
 export default function Example() {
   const myRef = useRef(null);
@@ -122,7 +122,7 @@ export default function Example() {
 ```js
 import { loadingProgressBar } from 'loading-progress-bar';
 
-loadingProgressBar.define('loading-progress-bar');
+loadingProgressBar('loading-progress-bar');
 
 // next code depends on your project
 const loadingProgressBarEl = document.createElement('loading-progress-bar');
@@ -145,7 +145,8 @@ document.body.append(loadingProgressBarEl);
 <table>
   <thead>
     <tr>
-    <th>Option</th>
+    <th>Property</th>
+    <th>Attribute</th>
     <th>Type</th>
     <th>Default</th>
     <th>Description</th>
@@ -154,30 +155,39 @@ document.body.append(loadingProgressBarEl);
   <tbody>
     <tr>
       <td>
-        <code>duration</code>
+        <code>color</code>
       </td>
       <td>
-        Number
+        <code>color</code>
       </td>
       <td>
-        <code>2000</code>
+        String
       </td>
       <td>
-        The animation duration.
+        <span style="color:#ef534e">▧</span>
+        <code>#ef534e</code>
+      </td>
+      <td>
+        Sets the main color for Loading Progress Bar.
       </td>
     </tr>
     <tr>
       <td>
-        <code>stepsCount</code>
+        <code>config</code>
       </td>
       <td>
-        Number
+        -
       </td>
       <td>
-        <code>1</code>
+        Object
       </td>
       <td>
-        Count steps from start to end the animation. 
+        <code>{duration: 2000, stepsCount: 1}</code>
+      </td>
+      <td>
+        <b>duration</b> - the animation duration.
+        <br>
+        <b>stepsCount</b> - count steps from start to end the animation. 
         Shows how many times need to invoke the function <code>generateProgress.next</code> to end the animation.
       </td>
     </tr>

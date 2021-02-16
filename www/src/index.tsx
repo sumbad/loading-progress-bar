@@ -2,6 +2,8 @@ import { EG, useRef, useCallback, useState } from '@web-companions/fc';
 import { loadingProgressBar } from '../../src';
 import { render as uhtmlRender } from 'uhtml';
 
+const css = String.raw;
+
 const LoadingProgressBar = loadingProgressBar('loading-progress-bar');
 
 /**
@@ -11,12 +13,15 @@ EG({ render: (t, c) => uhtmlRender(c, t) })(() => {
   const myRef = useRef<{
     generateProgress?: Generator;
     togglePause: (isPause?: boolean) => void;
-  }|null>(null);
+  } | null>(null);
 
   const [loaderConfig, setLoaderConfig] = useState({
     duration: 2000,
     stepsCount: 1,
   });
+
+  const [color, setColor] = useState<string>('#ef534e');
+  const [colorInterval, setColorInterval] = useState<NodeJS.Timeout | null>();
 
   const handleProgress = useCallback(() => {
     console.log(myRef.current);
@@ -40,15 +45,78 @@ EG({ render: (t, c) => uhtmlRender(c, t) })(() => {
     }
   }, []);
 
+  const handleColor = useCallback(
+    (e: InputEvent) => {
+      console.log((e.target as HTMLInputElement).value);
+      setColor((e.target as HTMLInputElement).value);
+    },
+    [setColor]
+  );
+
+  const randomizeColor = useCallback(() => {
+    if (colorInterval != null) {
+      clearInterval(colorInterval);
+      setColorInterval(null);
+    } else {
+      setColorInterval(
+        setInterval(() => {
+          const letters = '0123456789ABCDEF';
+          let color = '#';
+          for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+          }
+          setColor(color);
+        }, 700)
+      );
+    }
+  }, [setColor, colorInterval]);
+
   return (
     <>
-      <LoadingProgressBar config={loaderConfig} ref={myRef}></LoadingProgressBar>
-      <br />
-      <button onclick={handleProgress}>Progress loading</button>
-      <br />
-      <button onclick={() => myRef.current?.togglePause()}>Pause/Run</button>
-      <br />
+      <style>
+        {css`
+          .item {
+            margin: 10px;
+            display: block;
+          }
+        `}
+      </style>
+
+      <LoadingProgressBar
+        color={color}
+        config={loaderConfig}
+        ref={myRef}
+        style={css`
+          margin: 30px;
+        `}
+      ></LoadingProgressBar>
+
+      <button onclick={handleProgress} class="item">
+        Progress loading
+      </button>
+
+      <button onclick={() => myRef.current?.togglePause()} class="item">
+        Pause/Run
+      </button>
+
+      <section class="item">
+        <span
+          for="colorField"
+          style={css`
+            color: white;
+            font-weight: bold;
+          `}
+        >
+          Color:
+        </span>
+        <input id="colorField" onchange={handleColor} type="text" value={color}></input>
+        <button onclick={randomizeColor} class="item">
+          Randomize color
+        </button>
+      </section>
+
       <textarea
+        class="item"
         rows="10"
         value={JSON.stringify(loaderConfig, null, 2)}
         onchange={(e: Event) => {

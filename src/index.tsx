@@ -5,8 +5,8 @@ const html = String.raw;
 const css = String.raw;
 
 export interface LoadingProgressBarConfig {
-  duration: number; // ms (2000ms by default)
   stepsCount: number; // (1 by default)
+  duration: number; // ms (2000ms by default)
 }
 
 export interface LoadingProgressBarHTMLElement extends HTMLElement {
@@ -24,6 +24,11 @@ export const loadingProgressBar = EG({
         duration: 2000,
         stepsCount: 1,
       },
+    },
+    color: {
+      type: String,
+      attribute: 'color',
+      default: '#ef534e',
     },
   },
   render: (t: { template: string; style: string }, c) => {
@@ -99,7 +104,7 @@ export const loadingProgressBar = EG({
       .lpb {
         animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45);
         animation-fill-mode: both;
-        background: #ef534e;
+        background: ${props.color};
         height: 3px;
         left: 0;
         top: 0;
@@ -118,7 +123,7 @@ export const loadingProgressBar = EG({
         right: 0px;
         width: 100px;
         height: 100%;
-        box-shadow: 0 0 10px #ef534e, 0 0 5px #ef534e;
+        box-shadow: ${`0 0 10px ${props.color}, 0 0 5px ${props.color}`};
         opacity: 1;
         transform: rotate(3deg) translate(0px, -4px);
       }
