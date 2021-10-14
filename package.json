@@ -1,6 +1,6 @@
 {
   "name": "loading-progress-bar",
-  "version": "2.0.0-1",
+  "version": "2.0.1",
   "description": "The universal, framework-agnostic loading progress bar component",
   "author": "Denis Sumbaev @sumbad",
   "license": "MIT",
@@ -22,8 +22,8 @@
     "watch": "rollup -c -w",
     "dev": "concurrently \"npm:start\" \"npm:watch\"",
     "start": "browser-sync 'www' -w --port 8082 --no-open",
-    "prepublishOnly": "npm run build",
-    "release": "npm publish ./lib",
+    "prepublishOnly": "node scripts/prepublish.js && npm run build",
+    "release": "RELEASE_MODE=true npm publish ./lib",
     "release:next": "npm publish ./lib --tag next",
     "test": "jest",
     "test:watch": "npm run test -- --watch",

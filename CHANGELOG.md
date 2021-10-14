@@ -16,9 +16,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 <!-- ## Unreleased -->
 
-## Unreleased
+## [[2.0.0](https://github.com/sumbad/loading-progress-bar/releases/tag/v2.0.0)] - 2021-02-17
 ### Added
   - The `color` attribute changes the element's color
+
+### Changed
+  - Use `@web-companions/fc` v0.1.2
+  - Change setting API from `loadingProgressBar.define(tag)` to `loadingProgressBar(tag)`
 
 ## [[1.0.1](https://github.com/sumbad/loading-progress-bar/releases/tag/v1.0.1)] - 2020-11-16
 ### Added
