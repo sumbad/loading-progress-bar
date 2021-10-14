@@ -16,6 +16,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 <!-- ## Unreleased -->
 
+## Unreleased
+### Changed
+  - Use `@web-companions/gfc` instead of `@web-companions/fc`
+
 ## [[2.0.0](https://github.com/sumbad/loading-progress-bar/releases/tag/v2.0.0)] - 2021-02-17
 ### Added
   - The `color` attribute changes the element's color
