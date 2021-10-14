@@ -1,5 +1,7 @@
 import { loadingProgressBar, LoadingProgressBarHTMLElement } from '../src/index';
 
+// const sleep = new Promise()
+
 describe('loading-progress-bar', () => {
   const TAG = 'loading-progress-bar';
   const ELEMENT_ID = 'loadingProgressBar';
@@ -47,9 +49,11 @@ describe('loading-progress-bar', () => {
     const childEl = el.shadowRoot.firstChild as HTMLElement;
 
     el.togglePause();
+    await Promise.resolve();
     expect(getComputedStyle(childEl).animationPlayState).toBe('paused');
 
     el.togglePause(false);
+    await Promise.resolve();
     expect(getComputedStyle(childEl).animationPlayState).toBe('running');
   });
 

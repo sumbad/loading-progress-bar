@@ -19,6 +19,7 @@ const production = !process.env.ROLLUP_WATCH;
 const plug = {
   replace: replace({
     'process.env.NODE_ENV': production ? JSON.stringify('production') : JSON.stringify('development'),
+    preventAssignment: true
   }),
   resolve: resolve(),
   ts: typescriptPlugin({

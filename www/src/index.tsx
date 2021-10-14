@@ -1,6 +1,8 @@
-import { EG, useRef, useCallback, useState } from '@web-companions/fc';
+import { EG } from '@web-companions/gfc';
 import { loadingProgressBar } from '../../src';
 import { render as uhtmlRender } from 'uhtml';
+
+const render = (t, c) => uhtmlRender(c, t);
 
 const css = String.raw;
 
@@ -9,120 +11,135 @@ const LoadingProgressBar = loadingProgressBar('loading-progress-bar');
 /**
  * ROOT element
  */
-EG({ render: (t, c) => uhtmlRender(c, t) })(() => {
-  const myRef = useRef<{
-    generateProgress?: Generator;
-    togglePause: (isPause?: boolean) => void;
-  } | null>(null);
+EG()(function* () {
+  const myRef: {
+    current: {
+      generateProgress?: Generator;
+      togglePause: (isPause?: boolean) => void;
+    } | null;
+  } = {
+    current: null,
+  };
 
-  const [loaderConfig, setLoaderConfig] = useState({
+  let loaderConfig = {
     duration: 2000,
     stepsCount: 1,
-  });
+  };
 
-  const [color, setColor] = useState<string>('#ef534e');
-  const [colorInterval, setColorInterval] = useState<NodeJS.Timeout | null>();
+  let color = '#ef534e';
+  let colorInterval: NodeJS.Timeout | null = null;
 
-  const handleProgress = useCallback(() => {
+  let hasCustomPause = false;
+
+  const handleProgress = () => {
+    hasCustomPause = false;
     console.log(myRef.current);
+
     if (myRef.current?.generateProgress !== undefined) {
       const r = myRef.current.generateProgress.next();
       if (r.value === 1) {
         setTimeout(() => {
-          myRef.current?.togglePause(true);
+          !hasCustomPause && myRef.current?.togglePause(true);
         }, 300);
         setTimeout(() => {
-          myRef.current?.togglePause(false);
+          !hasCustomPause && myRef.current?.togglePause(false);
         }, 1000);
         setTimeout(() => {
-          myRef.current?.togglePause(true);
+          !hasCustomPause && myRef.current?.togglePause(true);
         }, 2000);
         setTimeout(() => {
-          myRef.current?.togglePause(false);
+          !hasCustomPause && myRef.current?.togglePause(false);
         }, 3000);
       }
       console.log(JSON.stringify(r));
     }
-  }, []);
+  };
 
-  const handleColor = useCallback(
-    (e: InputEvent) => {
-      console.log((e.target as HTMLInputElement).value);
-      setColor((e.target as HTMLInputElement).value);
-    },
-    [setColor]
-  );
+  const handleColor = (e: InputEvent) => {
+    console.log((e.target as HTMLInputElement).value);
+    color = (e.target as HTMLInputElement).value;
+    this.next();
+  };
 
-  const randomizeColor = useCallback(() => {
+  const randomizeColor = () => {
     if (colorInterval != null) {
       clearInterval(colorInterval);
-      setColorInterval(null);
+      colorInterval = null;
     } else {
-      setColorInterval(
-        setInterval(() => {
-          const letters = '0123456789ABCDEF';
-          let color = '#';
-          for (let i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
-          }
-          setColor(color);
-        }, 700)
-      );
+      colorInterval = setInterval(() => {
+        const letters = '0123456789ABCDEF';
+        let _color = '#';
+        for (let i = 0; i < 6; i++) {
+          _color += letters[Math.floor(Math.random() * 16)];
+        }
+        color = _color;
+        this.next();
+      }, 700);
     }
-  }, [setColor, colorInterval]);
+  };
 
-  return (
-    <>
-      <style>
-        {css`
-          .item {
-            margin: 10px;
-            display: block;
-          }
-        `}
-      </style>
-
-      <LoadingProgressBar
-        color={color}
-        config={loaderConfig}
-        ref={myRef}
-        style={css`
-          margin: 30px;
-        `}
-      ></LoadingProgressBar>
-
-      <button onclick={handleProgress} class="item">
-        Progress loading
-      </button>
-
-      <button onclick={() => myRef.current?.togglePause()} class="item">
-        Pause/Run
-      </button>
-
-      <section class="item">
-        <span
-          for="colorField"
-          style={css`
-            color: white;
-            font-weight: bold;
+  while (true) {
+    yield render(
+      <>
+        <style>
+          {css`
+            .item {
+              margin: 10px;
+              display: block;
+            }
           `}
-        >
-          Color:
-        </span>
-        <input id="colorField" onchange={handleColor} type="text" value={color}></input>
-        <button onclick={randomizeColor} class="item">
-          Randomize color
-        </button>
-      </section>
+        </style>
 
-      <textarea
-        class="item"
-        rows="10"
-        value={JSON.stringify(loaderConfig, null, 2)}
-        onchange={(e: Event) => {
-          setLoaderConfig(JSON.parse((e.currentTarget as HTMLTextAreaElement).value));
-        }}
-      ></textarea>
-    </>
-  );
+        <LoadingProgressBar
+          color={color}
+          config={loaderConfig}
+          ref={myRef}
+          style={css`
+            margin: 30px;
+          `}
+        ></LoadingProgressBar>
+
+        <button onclick={handleProgress} class="item">
+          Progress/Reset loading
+        </button>
+
+        <button
+          onclick={() => {
+            myRef.current?.togglePause();
+            hasCustomPause = true;
+          }}
+          class="item"
+        >
+          Pause/Run
+        </button>
+
+        <section class="item">
+          <span
+            for="colorField"
+            style={css`
+              color: white;
+              font-weight: bold;
+            `}
+          >
+            Color:
+          </span>
+          <input id="colorField" onchange={handleColor} type="text" value={color}></input>
+          <button onclick={randomizeColor} class="item">
+            Randomize color
+          </button>
+        </section>
+
+        <textarea
+          class="item"
+          rows="10"
+          value={JSON.stringify(loaderConfig, null, 2)}
+          onchange={(e: Event) => {
+            loaderConfig = JSON.parse((e.currentTarget as HTMLTextAreaElement).value);
+            this.next();
+          }}
+        ></textarea>
+      </>,
+      this
+    );
+  }
 })('demo-app');
