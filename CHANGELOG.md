@@ -19,6 +19,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 ### Changed
   - Use `@web-companions/gfc` instead of `@web-companions/fc`
+  - Rewrite tests from jest and electron to playwright
+  - Use GitHub actions instead of TravisCI for build
 
 ## [[2.0.0](https://github.com/sumbad/loading-progress-bar/releases/tag/v2.0.0)] - 2021-02-17
 ### Added

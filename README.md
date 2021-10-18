@@ -1,12 +1,12 @@
 <div align="center">
   <a href="https://www.npmjs.com/package/loading-progress-bar">
-    <img src="https://img.shields.io/npm/v/loading-progress-bar.svg?maxAge=86400" alt="Last npm Registry Version">
+    <img src="https://img.shields.io/npm/v/loading-progress-bar.svg?logo=npm" alt="Last npm Registry Version">
   </a>
   <a href="https://bundlephobia.com/result?p=loading-progress-bar">
     <img alt="gzip size" src="https://badgen.net/bundlephobia/minzip/loading-progress-bar" />
   </a>
-  <a href="https://travis-ci.com//sumbad/loading-progress-bar?branch=master">
-    <img src="https://travis-ci.com//sumbad/loading-progress-bar.svg?branch=master" alt="Build Status">
+  <a href="https://github.com/sumbad/loading-progress-bar/actions/workflows/workflow.yml">
+    <img src="https://github.com/sumbad/loading-progress-bar/actions/workflows/workflow.yml/badge.svg"/>
   </a>
   <a href="https://codecov.io/gh/sumbad/loading-progress-bar">
     <img src="https://codecov.io/gh/sumbad/loading-progress-bar/branch/master/graph/badge.svg" />
