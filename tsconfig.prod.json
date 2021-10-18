@@ -13,6 +13,7 @@
   },
   "exclude": [
     "www",
-    "__tests__"
+    "tests",
+    "playwright.config.ts"
   ]
 }
