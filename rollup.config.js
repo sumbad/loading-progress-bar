@@ -1,3 +1,5 @@
+import path from 'path';
+
 import typescriptPlugin from 'rollup-plugin-typescript2';
 import postcss from 'rollup-plugin-postcss';
 import babel from '@rollup/plugin-babel';
@@ -14,7 +16,7 @@ const atImport = require('postcss-import');
 
 // `npm run build` -> `production` is true
 // `npm run dev` -> `production` is false
-const production = !process.env.ROLLUP_WATCH;
+const production = process.env.NODE_ENV != null ? process.env.NODE_ENV === 'production': !process.env.ROLLUP_WATCH;
 
 const plug = {
   replace: replace({
@@ -37,12 +39,17 @@ const plug = {
   }),
 };
 
-export const dev = (input, file) => ({
-  input,
+export const dev = () => ({
+  input: './www/src/index.tsx',
   output: {
-    file,
+    dir: './www',
+    // file: 'index.js',
     format: 'iife', // immediately-invoked function expression — suitable for <script> tags
-    sourcemap: true,
+    sourcemap: 'inline',
+    sourcemapPathTransform: (relativeSourcePath, sourcemapPath) => {
+      // will replace relative paths with absolute paths
+      return path.resolve(path.dirname(sourcemapPath), relativeSourcePath);
+    },
   },
   plugins: [plug.replace, plug.resolve, plug.ts, plug.babel, plug.postcss],
 });
@@ -112,4 +119,4 @@ export const prodIife = (input, file) => ({
 
 export default production
   ? [prod('./src/index.tsx', './lib/index.es.js'), prodIife('./src/index.tsx', './lib/index.js')]
-  : [dev('./www/src/index.tsx', './www/index.js')];
+  : [dev()];
