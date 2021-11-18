@@ -18,6 +18,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 ### Changed
+  - Improve compatibility with Browsers. Add support for Safari and Firefox
+
+## [[2.0.1](https://github.com/sumbad/loading-progress-bar/releases/tag/v2.0.1)] - 2021-10-18
+### Changed
   - Use `@web-companions/gfc` instead of `@web-companions/fc`
   - Rewrite tests from jest and electron to playwright
   - Use GitHub actions instead of TravisCI for build

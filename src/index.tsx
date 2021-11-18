@@ -16,16 +16,37 @@ export interface LoadingProgressBarHTMLElement extends HTMLElement {
 }
 
 function render(t: { template: string; style: string }, c: ShadowRoot) {
-  const inner = c.innerHTML;
-  if (inner !== t.template) {
-    (c as ShadowRoot).innerHTML = t.template;
+  let el = c.querySelector('div');
+
+  if (el == null) {
+    el = document.createElement('div');
+    el.style.display = 'contents';
+    el.innerHTML = t.template;
+    c.append(el);
   }
 
-  const sheet = new CSSStyleSheet();
-  sheet['replaceSync'](t.style);
-  (c as ShadowRoot)['adoptedStyleSheets'] = [sheet];
+  if (window.ShadowRoot && 'adoptedStyleSheets' in Document.prototype && 'replace' in CSSStyleSheet.prototype) {
+    const sheet = new CSSStyleSheet();
+    sheet['replaceSync'](t.style);
+    c['adoptedStyleSheets'] = [sheet];
+  } else {
+    let style = c.querySelector('style');
+    if (style == null) {
+      style = document.createElement('style');
+      style.innerHTML = t.style;
+      c.insertBefore(style, el);
+    } else {
+      style.innerHTML = t.style;
+    }
+  }
 }
 
+/**
+ * Loading Progress Bar element
+ * 
+ * @param config - LoadingProgressBarConfig (optional)
+ * @param color - the main color (optional, #ef534e by default)
+ */
 export const loadingProgressBar = EG({
   props: {
     config: p.opt<LoadingProgressBarConfig>(),
@@ -39,7 +60,7 @@ export const loadingProgressBar = EG({
     stepsCount: 1,
   };
   let color = props.color || '#ef534e';
-  /////////////
+  ///////////////////////////////////////
 
   let isPause = false;
   let keyframes: string = '';
@@ -60,7 +81,7 @@ export const loadingProgressBar = EG({
 
     let _keyframes = '';
     for (let i = 0; i < stepsCount; i++) {
-      const keyframeName = ` loadingPB_${i * k}`;
+      const keyframeName = ` loadingPB_${i}`;
       _keyframes =
         _keyframes +
         ' ' +
@@ -83,7 +104,7 @@ export const loadingProgressBar = EG({
     const generator = function* () {
       while (true) {
         if (index < stepsCount) {
-          setAnimationName(`loadingPB_${index * k}`);
+          setAnimationName(`loadingPB_${index}`);
           ++index;
           yield index;
         } else {
