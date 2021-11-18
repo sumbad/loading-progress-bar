@@ -62,7 +62,7 @@ test.describe('loading-progress-bar', () => {
   });
 
   test.beforeEach(async () => {
-    const lpbElement = await page.evaluate(
+    await page.evaluate(
       ({ TAG, ELEMENT_ID }) => {
         const lpbElement = document.createElement(TAG);
         lpbElement.setAttribute('id', ELEMENT_ID);
@@ -77,7 +77,7 @@ test.describe('loading-progress-bar', () => {
   });
 
   test.afterEach(async () => {
-    const body = await page.evaluate(
+    await page.evaluate(
       ({ ELEMENT_ID }) => {
         document.getElementById(ELEMENT_ID)!.remove();
       },
@@ -105,11 +105,11 @@ test.describe('loading-progress-bar', () => {
 
   test('should change animationPlayState', async () => {
     await lpbElementHandle.evaluate((node) => node.togglePause!());
-    const computedStyle1 = await lpbElementHandle.evaluate((node) => getComputedStyle(node.shadowRoot?.firstChild as HTMLElement));
+    const computedStyle1 = await lpbElementHandle.evaluate((node) => getComputedStyle(node.shadowRoot?.querySelector('.lpb') as HTMLElement));
     expect(computedStyle1.animationPlayState).toBe('paused');
 
     await lpbElementHandle.evaluate((node) => node.togglePause!(false));
-    const computedStyle2 = await lpbElementHandle.evaluate((node) => getComputedStyle(node.shadowRoot?.firstChild as HTMLElement));
+    const computedStyle2 = await lpbElementHandle.evaluate((node) => getComputedStyle(node.shadowRoot?.querySelector('.lpb') as HTMLElement));
     expect(computedStyle2.animationPlayState).toBe('running');
   });
 
