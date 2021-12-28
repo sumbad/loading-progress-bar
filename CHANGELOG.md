@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 <!-- ## Unreleased -->
 
+## [[2.0.4](https://github.com/sumbad/loading-progress-bar/releases/tag/v2.0.4)] - 2021-12-29
+### Added
+  - Add tests to validate styles without adoptedStyleSheets support
+### Changed
+  - Update dependencies
+
 ## [[2.0.3](https://github.com/sumbad/loading-progress-bar/releases/tag/v2.0.3)] - 2021-11-18
 ### Changed
   - Improve compatibility with Browsers. Add support for Safari and Firefox
