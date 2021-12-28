@@ -17,8 +17,8 @@
 
 <div align="center">
   <a href="https://github.com/sumbad/loading-progress-bar">
-    <object data="https://raw.githubusercontent.com/sumbad/loading-progress-bar/master/title.png" type="image/png">
-      <img src="./title.png" alt="Screenshot of the component">
+    <object height="100px" data="https://raw.githubusercontent.com/sumbad/loading-progress-bar/master/title_video.gif" type="video/gif">
+      <img height="100px" src="./title_video.gif" alt="Screenshot of the component">
     </object>
   </a>
   <blockquote align="center">The universal, framework-agnostic loading progress bar component</blockquote>
