@@ -7,5 +7,10 @@ const config: PlaywrightTestConfig = {
     reuseExistingServer: !process.env.CI,
   },
   testDir: './tests',
+  // use: {
+  //   // headless: false,
+  //   // browserName: 'webkit'
+  //   // browserName: 'firefox'
+  // }
 };
 export default config;

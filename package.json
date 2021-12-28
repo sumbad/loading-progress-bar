@@ -29,7 +29,8 @@
     "release:next": "npm publish ./lib --tag next",
     "test": "rm -fr ./coverage && npm run dev:build && playwright test && nyc report --reporter=html --reporter=text",
     "test:ci": "CI=true npm run dev:build && playwright test && nyc report --reporter=lcov",
-    "test:report": "open ./coverage/index.html"
+    "test:report": "open ./coverage/index.html",
+    "test:debug": "PWDEBUG=1 npm run test"
   },
   "keywords": [
     "web component",

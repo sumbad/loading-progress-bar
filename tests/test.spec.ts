@@ -11,54 +11,59 @@ test.describe('loading-progress-bar', () => {
   let page: Page;
   let lpbElementHandle: ElementHandle<LoadingProgressBarHTMLElement>;
 
-  test.beforeAll(async ({ browser }) => {
+  test.beforeAll(async ({ browser, browserName }) => {
     page = await browser.newPage();
-    await page.coverage.startJSCoverage();
+
+    if (browserName === 'chromium') {
+      await page.coverage.startJSCoverage();
+    }
 
     await page.goto('/');
-    console.log(page.url());
+    console.log(browserName, page.url());
   });
 
-  test.afterAll(async () => {
-    const notCoveragePaths = /^$|(www)|(node_modules)/gi;
-    let data = {};
+  test.afterAll(async ({ browserName }) => {
+    if (browserName === 'chromium') {
+      const notCoveragePaths = /^$|(www)|(node_modules)/gi;
+      let data = {};
 
-    const coverage = await page.coverage.stopJSCoverage();
+      const coverage = await page.coverage.stopJSCoverage();
 
-    for (const entry of coverage) {
-      if (entry.source != null) {
-        const converter = v8toIstanbul('', 0, { source: entry.source });
-        await converter.load();
-        converter.applyCoverage(entry.functions);
+      for (const entry of coverage) {
+        if (entry.source != null) {
+          const converter = v8toIstanbul('', 0, { source: entry.source });
+          await converter.load();
+          converter.applyCoverage(entry.functions);
 
-        // https://istanbul.js.org/docs/advanced/alternative-reporters/#json
-        data = {
-          ...data,
-          ...converter.toIstanbul(),
-        };
-      }
-    }
-
-    for (const key in data) {
-      const item = data[key];
-
-      if (notCoveragePaths.test(item['path'])) {
-        delete data[key];
-        continue;
+          // https://istanbul.js.org/docs/advanced/alternative-reporters/#json
+          data = {
+            ...data,
+            ...converter.toIstanbul(),
+          };
+        }
       }
 
-      if (typeof item['path'] === 'string') {
-        item['path'] = `${item['path'].split('?')[0]}`.replace('@web-companions/gfc/', '');
+      for (const key in data) {
+        const item = data[key];
+
+        if (notCoveragePaths.test(item['path'])) {
+          delete data[key];
+          continue;
+        }
+
+        if (typeof item['path'] === 'string') {
+          item['path'] = `${item['path'].split('?')[0]}`.replace('@web-companions/gfc/', '');
+        }
       }
+
+      const saveDir = path.join(__dirname, '../.nyc_output');
+
+      if (!fs.existsSync(saveDir)) {
+        fs.mkdirSync(saveDir);
+      }
+
+      fs.writeFileSync(path.join(saveDir, 'coverage-final.json'), JSON.stringify(data));
     }
-
-    const saveDir = path.join(__dirname, '../.nyc_output');
-
-    if (!fs.existsSync(saveDir)) {
-      fs.mkdirSync(saveDir);
-    }
-
-    fs.writeFileSync(path.join(saveDir, 'coverage-final.json'), JSON.stringify(data));
   });
 
   test.beforeEach(async () => {
@@ -91,8 +96,12 @@ test.describe('loading-progress-bar', () => {
 
   test('should be API generateProgress method', async () => {
     const firsGenerateStep = { value: 1, done: false };
-    const currentGenerateStep = await lpbElementHandle.evaluate((node) => node.generateProgress?.next());
+    
+    let currentGenerateStep = await lpbElementHandle.evaluate((node) => node.generateProgress?.next());
     expect(currentGenerateStep).toEqual(firsGenerateStep);
+
+    currentGenerateStep = await lpbElementHandle.evaluate((node) => node.generateProgress?.next());
+    expect(currentGenerateStep).toEqual({ value: 0, done: false });
   });
 
   test('should be API togglePause method', async () => {
@@ -105,12 +114,16 @@ test.describe('loading-progress-bar', () => {
 
   test('should change animationPlayState', async () => {
     await lpbElementHandle.evaluate((node) => node.togglePause!());
-    const computedStyle1 = await lpbElementHandle.evaluate((node) => getComputedStyle(node.shadowRoot?.querySelector('.lpb') as HTMLElement));
-    expect(computedStyle1.animationPlayState).toBe('paused');
+    let animationPlayState = await lpbElementHandle.evaluate(
+      (node) => getComputedStyle(node.shadowRoot?.querySelector('.lpb') as HTMLElement).animationPlayState
+    );
+    expect(animationPlayState).toBe('paused');
 
     await lpbElementHandle.evaluate((node) => node.togglePause!(false));
-    const computedStyle2 = await lpbElementHandle.evaluate((node) => getComputedStyle(node.shadowRoot?.querySelector('.lpb') as HTMLElement));
-    expect(computedStyle2.animationPlayState).toBe('running');
+    animationPlayState = await lpbElementHandle.evaluate(
+      (node) => getComputedStyle(node.shadowRoot?.querySelector('.lpb') as HTMLElement).animationPlayState
+    );
+    expect(animationPlayState).toBe('running');
   });
 
   test('should reset a component state after stopping the animation', async () => {
@@ -137,16 +150,47 @@ test.describe('loading-progress-bar', () => {
         })
     );
 
-    const result = await lpbElementHandle.evaluate((node) => {
-      let result: IteratorResult<any> = {value: 0};
-      
+    let result = await lpbElementHandle.evaluate((node) => {
+      let _result: IteratorResult<any> = { value: 0 };
+
       for (let index = 0; index < 5; index++) {
-        result = node.generateProgress!.next();
+        _result = node.generateProgress!.next();
       }
 
-      return result;
+      return _result;
     });
 
     expect(result).toStrictEqual({ value: 5, done: false });
+
+    result = await lpbElementHandle.evaluate((node) => node.generateProgress!.next());
+    expect(result).toEqual({ value: 0, done: false });
+
+    result = await lpbElementHandle.evaluate((node) => node.generateProgress!.return(-1));
+    expect(result).toEqual({ value: -1, done: true });
+  });
+
+  test('should correct style without adoptedStyleSheets support', async () => {
+    const isAdoptedStyleSheets = await lpbElementHandle.evaluate((node) => node.shadowRoot!['adoptedStyleSheets'] != null);
+    let styleEl = await lpbElementHandle.evaluate((node) => node.shadowRoot!.querySelector('style'));
+
+    expect(isAdoptedStyleSheets || styleEl != null).toBeTruthy();
+
+    await page.evaluate(() => {
+      const dNewProto = Document.prototype;
+      delete dNewProto['adoptedStyleSheets'];
+      Object.setPrototypeOf(Document, dNewProto);
+    });
+
+    await lpbElementHandle.evaluate((node) => {
+      node.generateProgress?.next();
+    });
+
+    await lpbElementHandle.evaluate((node) => {
+      node.generateProgress?.next();
+    });
+
+    styleEl = await lpbElementHandle.evaluate((node) => node.shadowRoot!.querySelector('style'));
+
+    expect(styleEl).toBeTruthy();
   });
 });

@@ -43,7 +43,7 @@ function render(t: { template: string; style: string }, c: ShadowRoot) {
 
 /**
  * Loading Progress Bar element
- * 
+ *
  * @param config - LoadingProgressBarConfig (optional)
  * @param color - the main color (optional, #ef534e by default)
  */
@@ -124,54 +124,58 @@ export const loadingProgressBar = EG({
 
   updateStepsCount(config.stepsCount);
 
-  while (true) {
-    color = props.color || color;
+  try {
+    while (true) {
+      color = props.color || color;
 
-    if (props.config?.stepsCount != null && props.config.stepsCount !== config.stepsCount) {
-      config.stepsCount = props.config.stepsCount;
-      updateStepsCount(config.stepsCount);
+      if (props.config?.stepsCount != null && props.config.stepsCount !== config.stepsCount) {
+        config.stepsCount = props.config.stepsCount;
+        updateStepsCount(config.stepsCount);
+      }
+
+      if (props.config?.duration != null && props.config.duration !== config.duration) {
+        config.duration = props.config.duration;
+      }
+
+      props = yield render(
+        {
+          style: css`
+            /* dynamic keyframes */
+            ${keyframes}
+
+            .lpb {
+              animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45);
+              animation-fill-mode: both;
+              background: ${color};
+              height: 3px;
+              left: 0;
+              top: 0;
+              width: 0%;
+              z-index: 9999;
+              position: fixed;
+              animation-name: ${animationName};
+              animation-duration: ${config.duration + 'ms'};
+              animation-play-state: ${isPause ? 'paused' : 'running'};
+            }
+
+            .lpb:after {
+              display: ${animationName !== undefined ? 'block' : 'none'};
+              position: absolute;
+              content: '';
+              right: 0px;
+              width: 100px;
+              height: 100%;
+              box-shadow: ${`0 0 10px ${color}, 0 0 5px ${color}`};
+              opacity: 1;
+              transform: rotate(3deg) translate(0px, -4px);
+            }
+          `,
+          template: <div class="lpb"></div>,
+        },
+        $
+      );
     }
-
-    if (props.config?.duration != null && props.config.duration !== config.duration) {
-      config.duration = props.config.duration;
-    }
-
-    props = yield render(
-      {
-        style: css`
-          /* dynamic keyframes */
-          ${keyframes}
-
-          .lpb {
-            animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45);
-            animation-fill-mode: both;
-            background: ${color};
-            height: 3px;
-            left: 0;
-            top: 0;
-            width: 0%;
-            z-index: 9999;
-            position: fixed;
-            animation-name: ${animationName};
-            animation-duration: ${config.duration + 'ms'};
-            animation-play-state: ${isPause ? 'paused' : 'running'};
-          }
-
-          .lpb:after {
-            display: ${animationName !== undefined ? 'block' : 'none'};
-            position: absolute;
-            content: '';
-            right: 0px;
-            width: 100px;
-            height: 100%;
-            box-shadow: ${`0 0 10px ${color}, 0 0 5px ${color}`};
-            opacity: 1;
-            transform: rotate(3deg) translate(0px, -4px);
-          }
-        `,
-        template: <div class="lpb"></div>,
-      },
-      $
-    );
+  } finally {
+    this.generateProgress?.return(0);
   }
 });
